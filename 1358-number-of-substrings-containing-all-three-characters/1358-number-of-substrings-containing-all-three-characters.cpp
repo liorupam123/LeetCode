@@ -10,14 +10,14 @@ public:
         
         while(right<s.size())
         {
-            map[s[right]] += 1; // adding new element to window
+            map[s[right]] ++; // adding new element to window
             
             while(map['a'] && map['b'] && map['c']) // while(window is good)
             {
                 count += (end - right+1);
                 
 				        // removing first element[means shrinking window from front to form new window]
-                map[s[left]] -= 1; 
+                map[s[left]] -- ; 
                 left++;
             }
             right++;
