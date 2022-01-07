@@ -8,10 +8,15 @@ public:
 
         while(j<size){
             sum+=A[j];
+            // when sum is > goal, move the window
+          if(sum>S){
             while(sum>S ){
                 sum-=A[i];
                 i++;
             }
+          }
+            
+          // <= , count++
             count+=j-i+1;
             j++;
         }
