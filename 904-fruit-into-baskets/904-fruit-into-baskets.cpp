@@ -9,16 +9,9 @@ public:
         while(j<fruits.size()){ 
             //stroing the frequency of the character
             memo[fruits[j]]++; 
-            //map size matters here, 
-            //when map size <= k, store the subarray size
-            //and calculate the max subarray size and move second pointer always
-            if(memo.size()<=k){ 
-                mx = max(mx,j-i+1); 
-                j++; 
-    
-            }
+           
             //when map size >k
-            else if(memo.size()>k){ 
+            if(memo.size()>k){ 
                 //while(jab tak) map size > k , decrease the frequency of the characters
                 while(memo.size()>k){ 
                     memo[fruits[i]]--; 
@@ -29,10 +22,9 @@ public:
                     // move the first pointer to decrease / remove char from the first
                     i++; 
                 } 
-                //move second poiner always
-                j++; 
             } 
-            
+            mx = max(mx,j-i+1); 
+            j++; 
         } 
         return mx; 
     }
