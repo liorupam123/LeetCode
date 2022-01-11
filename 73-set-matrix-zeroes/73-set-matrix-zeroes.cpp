@@ -1,41 +1,41 @@
-// T.C =O(M*N*(M+N))    S.C=O(M*N)
+// Time complexity   = O(N*M)
+// Space Complexity: O(M + N), for storing hash tables.
 class Solution {
 public:
     void setZeroes(vector<vector<int>>& v) {
         int m=v.size();
         int n=v[0].size();
-        // take a temp matrix of size m*n, of all 1
-        int temp[m][n];
+        int row[m];
+        int col[n];
+        
+        // take a row vector and mark all index as false
         for(int i=0;i<m;i++)
-            for(int j=0;j<n;j++)
-                temp[i][j]=1;
+            row[i]=false;
         
-        // now iterate through the matrix
-        for(int i=0;i<m;i++){
+        // take a col vector and mark all index as false
+        for(int i=0;i<n;i++)
+            col[i]=false;
+        
+        // iterate through the matrix
+         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
-                // when matrix[i][j] == 0
+                // if matrix[i][j]==0
                 if(v[i][j]==0){
-                  
-                // set the row and col of the temp matrix = 0
-                for(int k=0;k<m;k++)
-                    temp[k][j]=0;
-                    
-                    for(int k=0;k<n;k++)
-                        temp[i][k]=0;
+                    // set the index of the row and col vector as true
+                    row[i]=true;
+                    col[j]=true;
                 }
-            } 
-        }
-        // now iterate and remake the value of matrix
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-              // if temp[i][j]==0 , set the matrix[i][j=0]
-               if(temp[i][j]==0)
-                   v[i][j]=temp[i][j];
-                else
-                    //else, keep the matrix[i][j as it is]
-                    v[i][j]=v[i][j];
             }
-        }
+         }
         
+         for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                // whenever row or col of that index == true, set the matrix[i][j]=0
+                if( row[i]==true  ||  col[j]==true){
+                    v[i][j]=0;
+                }
+            }
+         }
+    
     }
 };
