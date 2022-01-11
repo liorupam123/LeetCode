@@ -3,14 +3,21 @@
 class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
+      
+      // at first search the potential row
       int potential_row = binarysearchselectrow(matrix,target);
       
+      // if potential row == -1, thats means the the target is not present , return false
       if(potential_row==-1) return false;
       
+      // else , search the element in the row
       bool isfound = binarysearch(matrix,target,potential_row);
       return isfound;
     }
+   
+    // search the element in the row function
     bool binarysearch(vector<vector<int>>& matrix, int target,int r){
+      // simple binary search
       int lo = 0;
       int hi = matrix[0].size()-1;
       while(lo<=hi){
@@ -21,6 +28,8 @@ public:
       }
       return false;
     }
+  
+    // search the potential row function
     int binarysearchselectrow(vector<vector<int>>& matrix, int target){
       int lo = 0;
       int hi = matrix.size()-1;
@@ -28,6 +37,7 @@ public:
       while(lo<=hi){
         int mid = lo+(hi-lo)/2;
         
+        // checking if the target can present between the first and last element of the row
         if(matrix[mid][0]<=target && target<=matrix[mid][lc]){
           return mid;
         }
