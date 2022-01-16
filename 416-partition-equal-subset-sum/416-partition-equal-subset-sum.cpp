@@ -1,6 +1,6 @@
 class Solution {
 public:
-    bool subsetsum(vector<int>& nums,int n,int target,int currentIndex,unordered_map<string,int>&mp){
+    bool subsetsum(vector<int>& nums,int n,int target,int currentIndex,unordered_map<string,bool>&mp){
       if(target==0){
         return true;
       }
@@ -18,13 +18,13 @@ public:
          pick = subsetsum(nums,n,target-nums[currentIndex],currentIndex+1,mp);
       }
       if(pick){
-        return true;
+        return mp[currentKey] = true;
       }
       
       bool notpick = subsetsum(nums,n,target,currentIndex+1,mp);
       mp[currentKey] = ( pick || notpick);
         
-        return  mp[currentKey];
+      return  mp[currentKey];
 
       
     }
@@ -36,7 +36,7 @@ public:
         }
         if(sum%2!=0)  return false;
         int target = sum/2;
-        unordered_map<string,int>mp;
+        unordered_map<string,bool>mp;
         bool ans = subsetsum(nums,n,target,0,mp);
         return ans;
         
