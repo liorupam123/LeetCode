@@ -9,12 +9,20 @@ class Solution
 {
     public:
     int kknapSack(int W, int wt[], int val[], int n,vector<vector<int>>&dp){
-       if(n<=0)return 0;
-       if(W<=0)return 0;
-       if(W<wt[n-1]) return dp[n][W]=kknapSack(W,wt,val,n-1,dp);
+        
+       if(n<=0 || W==0 )    return 0;
+       
        if(dp[n][W]!=-1)return dp[n][W];
-       dp[n][W] = max(kknapSack(W,wt,val,n-1,dp),val[n-1]+kknapSack(W-wt[n-1],wt,val,n-1,dp));
-       return dp[n][W];
+       
+       int Pick = 0;
+       
+       if(W>=wt[n-1]) {
+           Pick = val[n-1] + kknapSack(W-wt[n-1],wt,val,n-1,dp);
+       }
+       
+       int notPick = kknapSack(W,wt,val,n-1,dp);
+       
+       return dp[n][W] = max(Pick,notPick);
    }
     //Function to return max value that can be put in knapsack of capacity W.
     int knapSack(int W, int wt[], int val[], int n) 
