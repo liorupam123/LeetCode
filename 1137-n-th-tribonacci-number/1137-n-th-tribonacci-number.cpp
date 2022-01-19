@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int nthTribonacci(int n, unordered_map<int,int>&mp){
+    int nthTribonacci(int n, vector<int>&mp){
         if(n==0){
             return 0;
         }
@@ -9,22 +9,18 @@ public:
             return 1;
         }
         
-        int currentKey = n;
-        
-        if(mp.find(currentKey)!=mp.end()){
-            return mp[currentKey];
-        }
+        if(mp[n]!=-1) return mp[n];
         
         int a = nthTribonacci(n-1,mp);
         int b = nthTribonacci(n-2,mp);
         int c = nthTribonacci(n-3,mp);
         
-        mp[currentKey] =  a+b+c;
+        mp[n] =  a+b+c;
         
-        return mp[currentKey] ;
+        return mp[n] ;
     }
     int tribonacci(int n) {
-        unordered_map<int,int>mp;
+        vector<int> mp(n+1,-1);
         return nthTribonacci(n,mp);
     }
 };
