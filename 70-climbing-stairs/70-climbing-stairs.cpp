@@ -1,31 +1,14 @@
 class Solution {
 public:
-    int totalways(int targetstair, int currentstair,unordered_map<int,int>&mp){
-      
-      // base condition
-      if(currentstair==targetstair){
-        return 1;
-      }
-      if(currentstair>targetstair){
-        return 0;
-      }
-      
-      int currentkey = currentstair;
-      if(mp.find(currentkey)!=mp.end()){
-         return mp[currentkey];
-      }
-      
-      // choices
-      int onejump = totalways(targetstair,currentstair+1,mp);
-      int twojump = totalways(targetstair,currentstair+2,mp);
-      
-      mp[currentkey] = onejump+twojump;
-      
-      return mp[currentkey];
-    }
+    int f(int n, vector<int>& dp){
+    if(n==0) return 1;
+		if(n==1) return 1;
+    
+    if(dp[n]!= -1) return dp[n];
+    return dp[n]= f(n-1,dp) + f(n-2,dp);
+}
     int climbStairs(int n) {
-      
-        unordered_map<int,int> mp;
-        return totalways(n,0,mp);
+        vector<int> dp(n+1,-1);
+        return f(n,dp);
     }
 };
