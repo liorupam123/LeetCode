@@ -9,34 +9,38 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
 // T.C --> O(1)
-// S.C --> O(n) --> with stack
+// S.C --> O(h) --> with stack
 
 class BSTIterator {
 public:
-    stack<int>s;
+  
+    stack<TreeNode*>s;
     
+    // go to extreme left and push everything into the stack
     void load(TreeNode* root){
         if(!root) return;
-        load(root->right);
-        s.push(root->val);
+        s.push(root);
         load(root->left);
     }
-  
     BSTIterator(TreeNode *root) {
         load(root);
     }
 
-    /** @return whether we have a next smallest number */
+    /* return whether we have a next smallest number */
     bool hasNext() {
         return !s.empty();
     }
 
-    /** @return the next smallest number */
+    // when it comes to return the next, store the top and pop
+    // if the top element has right subtree, call the load function to store it into the stack
+    // else return the node->val
     int next() {
-        int n = s.top();
+        TreeNode* node = s.top();
         s.pop();
-        return n;
+        if(node->right) load(node->right);
+        return node->val;
     }
     
 };
