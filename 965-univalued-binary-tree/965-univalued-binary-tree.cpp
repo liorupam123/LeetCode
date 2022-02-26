@@ -10,15 +10,31 @@
  * };
  */
 class Solution {
-    bool dfs(TreeNode* root, int val) {
-        if(!root) return true;
-        if(root->val != val) return false;
-        return dfs(root->left, val) && dfs(root->right, val);
-    }
 public:
     bool isUnivalTree(TreeNode* root) {
-		//Send the value and root to helper and just check every value is equal 
-		// to the root->value
-        return dfs(root, root->val);
+         if(root == NULL){
+            return 0;
+        }
+        queue<TreeNode*> q;
+        q.push(root);
+        int value = root->val;
+        while(!q.empty()){
+           
+            int currentSize = q.size();
+            for(int i=0;i<currentSize;i++){
+            TreeNode *currentNode = q.front();
+            q.pop();
+            if(currentNode->val != value){
+              return false;
+            }
+            if(currentNode->left!=NULL){
+                q.push(currentNode->left);    
+            }
+             if(currentNode->right!=NULL){
+                q.push(currentNode->right);    
+            }
+            }
+        }
+       return true;
     }
 };
