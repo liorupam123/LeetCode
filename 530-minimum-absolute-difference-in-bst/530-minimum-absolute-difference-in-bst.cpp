@@ -11,21 +11,19 @@
  */
 class Solution {
 public:
-    void inorder(TreeNode* root,vector<int> &store){
-      if(root==NULL)  return;
-      inorder(root->left,store);
-      store.push_back(root->val);
-      inorder(root->right,store);
-      
+    int diff = INT_MAX;
+    TreeNode *prev = NULL;
+    void dfs(TreeNode *root) {
+        // moving to the left as much as we can
+        if (root->left) dfs(root->left);
+        // if we find at least a node before, we update diff
+        if (prev) diff = min(diff, abs(prev->val - root->val));
+        prev = root;
+        // moving to the right as much as we can
+        if (root->right) dfs(root->right);
     }
-    int getMinimumDifference(TreeNode* root) {
-        vector<int> store;
-        inorder(root,store);
-        int ans = INT_MAX;
-        for(int i=0;i<store.size()-1;i++){
-          int diff = abs(store[i+1] - store[i]);
-          ans = min(ans,diff);
-        }
-        return ans;
+    int getMinimumDifference(TreeNode *root) {
+        dfs(root);
+        return diff;
     }
 };
