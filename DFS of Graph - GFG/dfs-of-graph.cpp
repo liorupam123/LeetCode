@@ -19,9 +19,9 @@ class Solution {
         vector<int> ans;
         vector<bool> visited(V+1,false);
         
-        for(int i=0;i<V;i++){
-            if(visited[i] == false){
-                recursivedfs(i,ans,visited,adj);
+        for(int node=0;node<V;node++){
+            if(visited[node] == false){
+                recursivedfs(node,ans,visited,adj);
             }
         }
         return ans;
@@ -31,7 +31,17 @@ class Solution {
 /*
 
 1. At first make a vector to store all the nodes and a visited boolean vector with all false
-2. Now iterate t
+2. Now iterate through all the vertex V
+3. If the node is not visited, visited[node] == false, call the recursive function for the node
+4. In the recursive function, push the node into ans vector --> ans.push_back(node)
+5. Mark the node as visited --> visited[node] = true
+6. Now call for his friends, if the adjacent nodes of the node are node visited, call recursion
+for them. --> for(auto x : adj[node]){
+            if(visited[x] == false){
+                recursivedfs(x,ans,visited,adj);
+            }
+        }
+
 
 */
 
