@@ -11,23 +11,29 @@
  */
 class Solution {
 public:
-    TreeNode* bstFromPreorder(vector<int>& A) {
-        int i = 0;
-        // always maintain the upper bound of the node
-        return build(A, i, INT_MAX);
-    }
-
-    TreeNode* build(vector<int>& A, int& i, int bound) {
-        // when the pointer is reached out of the end of the vector, return null
-        // or we can't place the node for the upper bound limit, return NULL
-        if (i == A.size() || A[i] > bound) return NULL;
+     TreeNode* construct(unordered_map<int, int>& mp, vector<int>& preorder, int start, int end, int &current)
+    {
+        if(start>end) return NULL;
+        TreeNode *root = new TreeNode(preorder[current]);
+        int index = mp[preorder[current]];
       
-        // make a tree node as the new element of the vector A[i++]
-        TreeNode* root = new TreeNode(A[i++]);
-        // left means smaller than root, upper bound is the root value
-        root->left = build(A, i, root->val);
-        // right means greater than root, upper bound is the INT_MAX
-        root->right = build(A, i, bound);
+        current++;
+        
+        root -> left = construct(mp,preorder,start,index-1,current);
+        root -> right = construct(mp,preorder,index+1,end,current);
+      
         return root;
+      
+    }
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+        vector<int> inorder(preorder.size());
+        for(int i=0;i<preorder.size();i++){
+          inorder[i] = preorder[i];
+        }
+        sort(inorder.begin(),inorder.end());
+        unordered_map<int, int> mp;
+        for(int i = 0; i < inorder.size(); i++) mp[inorder[i]] = i;
+        int current = 0;
+        return construct(mp, preorder, 0 , inorder.size() - 1, current);
     }
 };
