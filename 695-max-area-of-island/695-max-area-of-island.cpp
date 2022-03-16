@@ -1,23 +1,26 @@
 class Solution {
 public:
   
-     void numIslandsRec(int i, int j, int n , int m, vector<vector<int>>& grid, int &cnt){
+     void numIslandsRec(vector<vector<int>>& grid,int currentRow,int currentCol,int m,int n,int &cnt){
+        queue<pair<int,int>>q;
+        q.push({currentRow,currentCol});
         
-            if(i < 0 || i>=n ||j < 0 || j >=m || grid[i][j] == 0){
-            return;
+        while(!q.empty()){
+            auto it = q.front();
+            q.pop();
+            int curr_row = it.first;
+            int curr_col = it.second;
+            if(curr_row < 0 || curr_row>=m ||curr_col < 0 || curr_col >=n || grid[curr_row][curr_col] == 0){
+            continue;
             }
             cnt++;
-            // don't forget to make the land a water
-            grid[i][j] = 0;
-        
-            numIslandsRec(i+1, j, n, m, grid,cnt);
-        
-            numIslandsRec(i-1, j, n, m, grid,cnt);
-        
-            numIslandsRec(i, j+1, n, m, grid,cnt);
-        
-            numIslandsRec(i, j-1, n, m, grid,cnt);
-        
+            grid[curr_row][curr_col] = 0;
+            q.push({curr_row-1,curr_col});
+            q.push({curr_row,curr_col+1});
+            q.push({curr_row+1,curr_col});
+            q.push({curr_row,curr_col-1});
+        }
+        return;
     }
     
     
@@ -30,7 +33,7 @@ public:
             for(int j=0; j<m; j++){
               int cnt = 0;
                 if(grid[i][j] == 1){
-                    numIslandsRec(i, j, n, m, grid,cnt);
+                    numIslandsRec(grid,i, j, n, m,cnt);
                 }
                  ans = max(ans,cnt);
             }
