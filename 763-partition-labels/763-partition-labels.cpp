@@ -10,7 +10,7 @@ public:
         for(int i=0;i<S.size();i++)
             map[S[i]]=i;
       
-        // taking the maxindex = 0 and lastindex = 1
+        // taking the maxindex = 0 and lastindex = -1
         int maxindex=0,lastindex=-1;
         for(int i=0;i<S.size();i++){
           
