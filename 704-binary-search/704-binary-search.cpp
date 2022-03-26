@@ -1,25 +1,26 @@
 class Solution {
 public:
-    int search(vector<int>& nums, int target) {
-      int left=0,right=nums.size()-1;
+    int recursiveBS(vector<int>& nums,int left,int right, int target){
+      
       while(left<=right){
-        // (left + right )/2 will show integer overflow for big inputs
-        int m =left+(right-left)/2; 
-        // if middle element == target , return mid index
-        if(nums[m]==target){ 
-          return m;
+        int mid =left+(right-left)/2;
+      
+        if(nums[mid]==target){ 
+            return mid;
         }
-        // if mid element is greater , target stands at the left, so right = mid -1
-        else if(nums[m]>target){ 
-          right=m-1;
+        else if(nums[mid]>target){ 
+            return recursiveBS(nums,left,mid-1,target);
         }
-        // if mid element is lower , target stands at the right, so left = mid +1
         else{ 
-          left=m+1;
+            return recursiveBS(nums,mid+1,right,target);
         }
       }
-      // element is not present...
-      return -1; 
+      return -1;  
+    }
+    int search(vector<int>& nums, int target) {
+      int n = nums.size();
+      return recursiveBS(nums,0,n-1,target);
+      
     }
   
 };
