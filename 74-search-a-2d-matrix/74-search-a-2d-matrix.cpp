@@ -1,5 +1,6 @@
-//1. to find potential row
-//2. find target in potential row
+// O(logm + logn) ==> O(log(m*n))
+//1. to find potential--> row O(logm)
+//2. find target in potential--> row O(logn)
 class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
