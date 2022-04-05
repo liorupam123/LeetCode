@@ -2,19 +2,17 @@ class Solution {
 public:
     int maxArea(vector<int>& height) {
         int n = height.size();
-        int i=0,j=n-1;
-        int water = 0;
+        int ans = 0;
+        int i = 0 , j = n-1;
         while(i<j){
-          // normal formula like brute force
-          int heights = min(height[i],height[j]);
-          int width = abs(i-j);
-          water = max(water,heights*width);
-          
-          // its the main point
-          // move the pointer of the less height
-          if(height[i]<height[j]) i++;
-          else  j--;
+            int h = min(height[i],height[j]);
+            int w = abs(i-j);
+            int water = h * w;
+            ans = max(ans,water);
+            if(height[i]<height[j]) i++;
+            else j--;
         }
-        return water;
+        
+        return ans;
     }
 };
